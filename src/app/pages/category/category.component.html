@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div>
+    <h2>Categories</h2>
+  </div>
+
+  <!-- Show the category form only if the user is SUPER_ADMIN -->
+  <div *ngIf="authService.isSuperAdmin()">
+    <div class="row">
+      <div class="col-12">
+        <app-category-form
+          [categoryForm]="categoryForm"
+          (callSaveMethod)="saveCategory($event)"
+          (callUpdateMethod)="updateCategory($event)"
+        ></app-category-form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Category list -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <app-category-list
+        (callModalAction)="callEdition($event)"
+        (callDeleteAction)="categoryService.delete($event)"
+        [title]="'Category List'"
+        [categories]="categoryService.categories$()"
+        [isSuperAdmin]="authService.isSuperAdmin()"
+      ></app-category-list>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="row" *ngIf="categoryService.categories$().length">
+    <div class="col-12">
+      <app-pagination
+        [service]="categoryService"
+        [customCall]="true"
+        (callCustomPaginationMethod)="categoryService.getAll()"
+      ></app-pagination>
+    </div>
+  </div>
+</div>

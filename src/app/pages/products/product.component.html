@@ -1,0 +1,41 @@
+<div class="container-fluid">
+  <div>
+    <h2>Products</h2>
+  </div>
+
+  <!-- Show the product form only if the user is SUPER_ADMIN -->
+  <div *ngIf="authService.isSuperAdmin()">
+    <div class="row product-container">
+      <div class="col-12">
+        <app-product-form
+          [productForm]="productForm"
+          (callSaveMethod)="saveProduct($event)"
+          (callUpdateMethod)="updateProduct($event)"
+        ></app-product-form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Product list is always visible; however, action buttons are hidden for non-admins -->
+  <div class="row mt-4">
+    <div class="col-12">
+      <app-product-list
+        (callModalAction)="callEdition($event)"
+        (callDeleteAction)="productService.delete($event)"
+        [products]="productService.products$()"
+        [isSuperAdmin]="authService.isSuperAdmin()"
+      ></app-product-list>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="row" *ngIf="productService.products$().length">
+    <div class="col-12">
+      <app-pagination
+        [service]="productService"
+        [customCall]="true"
+        (callCustomPaginationMethod)="productService.getAll()"
+      ></app-pagination>
+    </div>
+  </div>
+</div>

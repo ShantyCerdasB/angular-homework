@@ -1,0 +1,19 @@
+.modal-header {
+  display: flex;
+  justify-content: end;
+  border-bottom: none;
+  padding-bottom: 0px;
+  .close {
+    background: none;
+    border: none;
+  }
+}
+
+.modal-content.custom-bg {
+  background-color: var(--bg-color);
+}
+
+.modal-body {
+  max-height: 80vh; 
+  overflow-y: auto;
+}
